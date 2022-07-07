@@ -71,7 +71,16 @@ up_color = args.up_color
 down_color = args.down_color
 
 # Import dataset
-DF = pd.read_csv(in_file,sep='\t',index_col=0).reset_index(drop=True)
+file_type = in_file.split('.')[-1]
+if file_type == 'tsv':
+    DF = pd.read_csv(in_file,sep='\t',index_col=0).reset_index(drop=True)
+elif file_type == 'xlsx':
+    DF = pd.read_excel(in_file,index_col=0)
+elif file_type == 'csv':
+    DF = pd.read_csv(in_file,sep=',',index_col=0).reset_index(drop=True)
+else:
+    raise NameError("Invalid input format. Has to be either .tsv, .csv or .xlsx.")
+
 # Sort DF properly
 DF.insert(2,'absLogF',np.absolute(DF.loc[:,'log2FoldChange']))
 DF = DF.sort_values(['padj','log2FoldChange'],ascending=[True,False]).reset_index(drop=True)
@@ -91,10 +100,10 @@ fig,ax = plt.subplots(figsize=[8,8])
 ax.axhline(-np.log10(pval_thresh),color='gray',linestyle='--')
 ax.axvline(log_thresh,color='gray',linestyle='--')
 ax.axvline(-log_thresh,color='gray',linestyle='--')
-ax.scatter(x,y,c=DF.loc[:,'color'].values,s=3)
+ax.scatter(x,y,c=DF.loc[:,'color'].values,s=5)
 for i in range(n_names2show):
     ha = "right" if x[i] > 0 else "left"
-    ax.text(x[i], y[i] , s = names[i],ha=ha)
+    ax.text(x[i], y[i] , s = names[i],ha=ha, va='center')
 ax.set_ylabel(r'$-log_{10}(pval)$')
 ax.set_xlabel(r'$log_2FoldChange$')
 ax.set_title(title)
