@@ -22,6 +22,8 @@
         P-value threshold that determines significance. Defaults to 0.01.
     log2F : float (optional).
         Log2Fold value threshold that determines significance. Defaults to 1.
+    n_names2show : int (optional).
+        Number of top gene names to show. Defaults to 0.
     pval_col : string (optional).
         Name of the column corresponding to p-values in the DE dataset. Defaults to 'padj'.
     log_col : string (optional).
@@ -30,7 +32,7 @@
     gene_col : string (optional).
         Name of the column corresponding to gene names in the DE dataset. Defaults to 'gene'.
     title : string (optional).
-        Title of the plot to be written on top of the plot. Defaults to 'Volcano plot'..
+        Title of the plot to be written on top of the plot. Defaults to 'Volcano plot'.
     up_color : string (optional).
         Color for the up-regulated genes. Defaults to 'green'.
     down_color : string (optional).
