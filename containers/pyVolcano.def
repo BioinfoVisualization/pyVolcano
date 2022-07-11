@@ -1,0 +1,11 @@
+Bootstrap: docker
+From: python:3.8.10
+
+%post
+    pip install numpy==1.23.0
+    pip install matplotlib==3.5.2
+    pip install pandas==1.4.3
+    pip install openpyxl==3.0.9
+
+%runscript
+    ./src/pyVolcano.py "$@"
