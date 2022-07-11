@@ -52,7 +52,7 @@ parser.add_argument('out_path', type=str, help="Path to the file where the figur
 parser.add_argument('--pval', type=float, default=0.01, help="P-value threshold to determine significance. Defaults to 0.01.")
 parser.add_argument('--log2F', type=float, default=1, help="Log2Fold threshold to determine significance. Defaults to 1.")
 parser.add_argument('-n','--n_names2show', type=int, default=0, help="Number of top gene names to show. Defaults to 0.")
-parser.add_argument('--pval_col', type=str, default='padj', help="Name of the column corresponding to p-values in the DE dataset. Defaults to 'padj'.")
+parser.add_argument('--pval_col', type=str, default='p-val', help="Name of the column corresponding to p-values in the DE dataset. Defaults to 'padj'.")
 parser.add_argument('--log_col', type=str, default='log2FoldChange', help="Name of the column corresponding to log2 values in the DE dataset. Defaults to 'log2FoldChange'.")
 parser.add_argument('--gene_col', type=str, default='gene', help="Name of the column corresponding to gene names in the DE dataset. Defaults to 'gene'.")
 parser.add_argument('--title', type=str, default='Volcano plot', help="Title of the plot. Defaults to 'Volcano plot'.")
@@ -84,8 +84,11 @@ else:
     raise NameError("Invalid input format. Has to be either .tsv, .csv or .xlsx.")
 
 # Sort DF properly
-DF.insert(2,'absLogF',np.absolute(DF.loc[:,'log2FoldChange']))
-DF = DF.sort_values(['padj','log2FoldChange'],ascending=[True,False]).reset_index(drop=True)
+DF.insert(2,'absLogF',np.absolute(DF.loc[:,log_col]))
+DF = DF.sort_values([pval_col,log_col],ascending=[True,False]).reset_index(drop=True)
+# Truncation of names to show
+n_sg = len(DF.loc[(DF['absLogF']>log_thresh) & (DF[pval_col]<pval_thresh),:])
+n_names2show = n_names2show if n_names2show<n_sg else n_sg
 
 # Insert color
 DF.insert(4,'color','black')
