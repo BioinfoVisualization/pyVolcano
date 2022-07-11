@@ -27,7 +27,7 @@ When used as a command line script, the following parameters should be given:
         Name of the column corresponding to p-values in the DE dataset. Defaults to 'padj'.
     log_col : string (optional).
         Name of the column corresponding to log2Fold values in the DE dataset. Defaults to
-        'log2FoldChange'.
+        'log2Fold'.
     n_names2show : int (optional).
         Number of top gene names to show. Defaults to 0.
     title : string (optional).
@@ -36,12 +36,12 @@ When used as a command line script, the following parameters should be given:
         Color for the up-regulated genes. Defaults to 'green'.
     down_color : string (optional).
         Color for the down-regulated genes. Defaults to 'red'.
-    width : int (optional)
+    width : int (optional).
         Width of the figure in inches. Defaults to 8.
-    height : int (optional)
+    height : int (optional).
         Height of the figure in inches. Defaults to 8.
 
-THe script must be run in the environment `containers/env.yml`, or following the
+The script must be run in the environment `containers/env.yml`, or following the
 requirements in `requiremets.txt`.
 
 This file can also be imported as a module and contains the following
@@ -85,7 +85,7 @@ def volcano(df,ax,pval=0.01,log2F=1,gene_col='gene',pval_col='p-val',
         Name of the column corresponding to p-values in the DE dataset. Defaults to 'padj'.
     log_col : string (optional).
         Name of the column corresponding to log2Fold values in the DE dataset. Defaults to
-        'log2FoldChange'.
+        'log2Fold'.
     n_names2show : int (optional).
         Number of top gene names to show. Defaults to 0.
     title : string (optional).

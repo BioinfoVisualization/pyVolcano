@@ -5,8 +5,7 @@
 *.xls
 #### or
 ### Datasets in folders (extensionless like pickle)
-#/data/**/*.xlsx
-### Complete folders
+#/data/DE_data.*
 ### Documents
 *.pdf
 *.doc
