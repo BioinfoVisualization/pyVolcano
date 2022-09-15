@@ -104,9 +104,6 @@ def volcano(df,ax,pval=0.01,log2F=1,gene_col='gene',pval_col='p-val',
     # Sort DF properly
     DF.insert(2,'absLogF',np.absolute(DF.loc[:,log_col]))
     DF = DF.sort_values([pval_col,log_col],ascending=[True,False]).reset_index(drop=True)
-    # Truncation of names to show
-    n_sg = len(DF.loc[(DF['absLogF']>log2F) & (DF[pval_col]<pval),:])
-    n_names2show = n_names2show if n_names2show<n_sg else n_sg
     # Insert color
     DF.insert(4,'color','black')
     down = (DF.loc[:,pval_col]<pval)&(DF.loc[:,log_col]<-log2F)
@@ -117,15 +114,21 @@ def volcano(df,ax,pval=0.01,log2F=1,gene_col='gene',pval_col='p-val',
     x = DF.loc[:,log_col].values
     y = -np.log10(DF.loc[:,pval_col].values)
     color = DF.loc[:,'color'].values
-    names = DF.loc[:,gene_col]
     # Plot
     ax.axhline(-np.log10(pval),color='gray',linestyle='--')
     ax.axvline(log2F,color='gray',linestyle='--')
     ax.axvline(-log2F,color='gray',linestyle='--')
     ax.scatter(x,y,c=color,s=3)
+    # Truncation of names to show
+    DE = DF.loc[(DF['absLogF']>log2F) & (DF[pval_col]<pval),:]
+    n_sg = len(DE)
+    n_names2show = n_names2show if n_names2show<n_sg else n_sg
+    names = DE.loc[:,gene_col].values
+    x_de = DE.loc[:,log_col].values
+    y_de = -np.log10(DE.loc[:,pval_col].values)
     for i in range(n_names2show):
-        ha = "right" if x[i] > 0 else "left"
-        ax.text(x[i], y[i] , s = names[i],ha=ha)
+        ha = "right" if x_de[i] > 0 else "left"
+        ax.text(x_de[i], y_de[i] , s = names[i],ha=ha)
     ax.set_ylabel(r'$-log_{10}(pval)$')
     ax.set_xlabel(r'$log_2FoldChange$')
     ax.set_title(title)
