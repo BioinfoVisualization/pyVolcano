@@ -94,6 +94,11 @@ def volcano(df,ax,pval=0.01,log2F=1,gene_col='gene',pval_col='p-val',
         Color for the up-regulated genes. Defaults to 'green'.
     down_color : string (optional).
         Color for the down-regulated genes. Defaults to 'red'.
+
+    Returns
+    -------
+    matplotlib.Axes.ax
+        Ax object holding the plot.
     """
     DF = df.copy()
     # Parameter verification
